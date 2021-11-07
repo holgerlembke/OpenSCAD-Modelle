@@ -34,7 +34,7 @@ difference() {
     
     union() {
         translate([0,0,-1])
-        cylinder(h=18.0, d=schraubendurchmesser);
+        cylinder(h=hoehe+2.0, d=schraubendurchmesser);
 
         translate([0,0,-1])
         cylinder(h=schraubenkopfhoehe+1, d=schraubenkopfdurchmesser);

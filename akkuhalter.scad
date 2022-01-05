@@ -11,9 +11,10 @@
       18650   Ø 18,6 mm × 65,2 mm
       
       Modulnamen:          Kapazität
-        batterieAAA();         5 Stück
-        batterieAA();           4 Stück
-        batterie18650();      2 Stück
+        batterieAAA();         5 Stück AAA
+        batterieAA();           4 Stück AA
+        batterie18650();      2 Stück 18650
+        SDKarteMicro();       5 Stück Micro-SD mit viel Platz
         
       STLs einzeln für die Akkus erzeugen und entsprechend oft 
       auf die Druckplattform/Slicer kopieren und ausdrucken.
@@ -33,6 +34,13 @@
 
 $fn = $preview ? 20 : 100;   // hier ändern für schnelleres Rendern
 
+// hier auswählen:
+// batterieAA();
+// batterie18650();
+ //batterieAAA();
+ SDKarteMicro();
+
+// Parameter
 blockbreite = 37.0; 
 blockhoehe = 25.0;
 blockrundung = 5.0; // radius
@@ -49,10 +57,11 @@ battdmAAA = 10.5 + battdmdelta;
 battdmAA = 14.5 + battdmdelta + 0.1;
 battdm18650 = 18.6 + battdmdelta;
 
-// hier auswählen:
-batterieAA();
-// batterie18650();
- //batterieAAA();
+// SDKarte
+sdkartetiefe = 9.0;       // Mirco-SD: 15.0 mm × 11.0 mm × 1.0 mm
+sdkartebreite = 13.0;
+sdkartedicke = 2.0;
+
 
 // Tests
 // testvisualisierung1(10); // zusammengebaute module, wert: abstand der blöcke
@@ -100,6 +109,32 @@ module testvisualisierung2(dist) {
             
             translate([-135,-10,-1])
             cube([100,100,100]);
+        }
+    }
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+module SDKarteMicro() {
+    difference() {
+        union() {
+            block();
+        }
+        
+        union() {
+            translate([-13,-12,blockhoehe-sdkartetiefe])
+            cube([sdkartebreite,sdkartedicke,20]);
+
+            translate([2,-6,blockhoehe-sdkartetiefe])
+            cube([sdkartebreite,sdkartedicke,20]);
+            
+            translate([-sdkartebreite/2-3,0,blockhoehe-sdkartetiefe])
+            cube([sdkartebreite,sdkartedicke,20]);
+
+            translate([2,6,blockhoehe-sdkartetiefe])
+            cube([sdkartebreite,sdkartedicke,20]);
+
+            translate([-13,12,blockhoehe-sdkartetiefe])
+            cube([sdkartebreite,sdkartedicke,20]);
         }
     }
 }

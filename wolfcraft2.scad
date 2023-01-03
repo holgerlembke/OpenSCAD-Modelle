@@ -16,7 +16,7 @@ $fn = $preview ? 20 : 100;
 
 
 pindm = 3.9 + 0.2;      // Durchmesser des Pinlochs
-pinbreite = 12.0;         // Brette des Pinzylinders
+pinbreite = 12.0;         // Breite des Pinzylinders
 pinwandst = 2.0;         // Wandstärke des Pinlochs
 
 backenbreite = 20.0;

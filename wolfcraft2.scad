@@ -6,6 +6,7 @@
     
     + Wolfcraft FZH 40 Ergo-Federzwinge 3626000
 
+    Gedruckt mit 60% Füllung.
     
     nicht probiert:
       Wolfcraft FZ 40 Federzwinge 3630000
@@ -27,33 +28,46 @@ backenoffset = 10.0;
 // die beiden Stege
 stegachse = true;          // ohne diesen macht es keinen Sinn!
 stegquer = true;
+mittelfase = true;          // die "Zentrierfase" in der Mitte, 45° ohne Stützstruktur
 
-steg=[ 
+steg = [ 
     [0,-pindm/2.0-pinwandst],
     [0,+pindm/2.0+pinwandst],
     [backenoffset-backendicke/2.0,backenbreite/2.0],
     [backenoffset-backendicke/2.0,-backenbreite/2.0]
     ];
-stegpkt=[[0,1,2,3]];
+stegpkt = [[0,1,2,3]];
 
-steif=[ 
+steif = [ 
     [pindm/2.0+pinwandst,-pinbreite/2.0],
     [pindm/2.0+pinwandst,+pinbreite/2.0],
     [backenoffset-backendicke/2.0,backenlaenge/2.0],
     [backenoffset-backendicke/2.0,-backenlaenge/2.0]
     ];
-steifpkt=[[0,1,2,3]];
+steifpkt = [[0,1,2,3]];
+
+pofs = 0;
+pgrid = 0.5;
+p45 = [[0,0],[-pgrid,0],[pgrid,-pgrid]];
+pp45 = [[0,1,2]];
+
+// die Mittelfase
+nutgrid = 1.5;
+nut45 = [[-nutgrid,0],[0,nutgrid],[0,-nutgrid]];
+nnut45 = [[0,1,2]];
 
 
 difference() {
     union() {
         cylinder(h=pinbreite,d=pindm+2*pinwandst, center=true);
         
+        color("red")
         translate([backenoffset,0,0])
         cube([backendicke,backenbreite,backenlaenge], center=true);
         
         // der Steg in Achsenausrichtung
         if (stegachse) {
+            color("blue")
             linear_extrude(height=pinbreite, center = true, 
                                    convexity = 10, twist = 0)
             polygon(steg,stegpkt);
@@ -61,6 +75,7 @@ difference() {
         
         // der Steg in Querrichtung
         if (stegquer) {
+        color("green")
             rotate([90,0,0])
             linear_extrude(height=pindm+2.0*pinwandst, center = true, 
                                    convexity = 10, twist = 0)
@@ -70,6 +85,42 @@ difference() {
     
     union() {
         cylinder(h=pinbreite,d=pindm, center=true);
+        
+        // Fußphasen aussen, Anti-"Elefantenfuß"
+        color("pink") {
+            translate([backendicke/2.0+backenoffset+pofs,backenbreite/2.0-pofs,0])
+            linear_extrude(height = backenlaenge, center = true, convexity = 10, twist = 0)
+            polygon(p45,pp45);
+            
+            rotate([180,0,0])
+            translate([backendicke/2.0+backenoffset+pofs,backenbreite/2.0-pofs,0])
+            linear_extrude(height = backenlaenge, center = true, convexity = 10, twist = 0)
+            polygon(p45,pp45);
+            
+            rotate([90,0,0])
+            translate([backendicke/2.0+backenoffset+pofs,backenlaenge/2.0-pofs,0])
+            linear_extrude(height = backenbreite, center = true, convexity = 10, twist = 0)
+            polygon(p45,pp45);
+            
+            rotate([270,0,0])
+            translate([backendicke/2.0+backenoffset+pofs,backenlaenge/2.0-pofs,0])
+            linear_extrude(height = backenbreite, center = true, convexity = 10, twist = 0)
+            polygon(p45,pp45);
+        }
+
+        // Fußphasen aussen, Anti-"Elefantenfuß"
+        if (mittelfase) {
+            color("white") {
+                translate([backendicke/2.0+backenoffset,0,0])
+                linear_extrude(height = backenlaenge, center = true, convexity = 10, twist = 0)
+                polygon(nut45,nnut45);
+                
+                rotate([90,0,0])
+                translate([backendicke/2.0+backenoffset,0,0])
+                linear_extrude(height = backenbreite, center = true, convexity = 10, twist = 0)
+                polygon(nut45,nnut45);
+            }
+        }        
     }
 }
 

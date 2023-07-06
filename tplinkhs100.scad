@@ -61,6 +61,8 @@ intersection() {
             color("pink") {
                 translate([len/2.0,20,-4-5]) {
                     cylinder(d=4.0,h=20);
+                    
+                    translate([0,0,7.5]) cylinder(d=5.0,h=4);
                 }
             }
         }

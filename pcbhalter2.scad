@@ -4,9 +4,9 @@
     
     notwendige Zutaten:
     - Schraube M3 x 30
-    - Scheiben großer Außendurchmesser (DIN 9021) M3 (3,2 x 9,0 x 3)
+    - Scheibe mit großem Außendurchmesser (DIN 9021) M3 (3,2 x 9,0 x 3)
     - Mutter M3
-    - Feder 0.5mm x 35mm x 8mm 
+    - Feder 0,5 mm x 35 mm x 8 mm 
     
     Drucken mit hoher Füllung, damit sie "was wiegen tun".
     
@@ -15,7 +15,7 @@
   
     Für ein einfaches, dünnes Stück Stahlblech A4 habe ich keine Quelle 
     gefunden. Oft sind die Bleche zu dick. Oder mit der (Schlag-) Schere
-    geschnitten, daher verzogen.
+    geschnitten, daher scharfkantig und verzogen.
     
 */
 $fn = $preview ? 20 : 200;

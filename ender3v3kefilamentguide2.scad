@@ -79,12 +79,11 @@ module halter() {
     kfl = 13.0;
     kfh = 17.0;
     kdr = 8.0;
-    color("green") 
     translate([-kupplungaussen,winkell-kupplungh-kfl,winkelh-kupplungh-kantrund+kfh]) 
     rotate([-15,0,0]) 
     union() {
         difference() {
-            union() {
+            color("green")  union() {
                 cube([kupplungaussen,kupplungaussen,kupplungh]);
                 translate([kupplungaussen,0,kdr-3]) 
                 rotate([-90,0,0]) cylinder(d=kdr,h=kupplungaussen);
@@ -101,7 +100,7 @@ module halter() {
 
 //************************************************************************
 module rollrad() {
-    difference() {
+    color("blue") difference() {
         union() {
             translate([0,0,-1.5]) cylinder(d=rollrdm,h = rollrb);
         }
@@ -110,19 +109,6 @@ module rollrad() {
             translate([0,0,-rollrb/2.0-1]) cylinder(d=rollrschrdm,h = rollrb+2);
         }
     }    
-}
-
-//************************************************************************
-module halterungsdemo() {
-    color("gray") import("j:/filseguide.stl");
-    //translate([15,30,0]) cylinder(d=4,h=4);
-/*
-   loch: 15,10
-   loch: 15,30
-
-   d= 5
-   d= 9.5
-*/
 }
 
 //************************************************************************

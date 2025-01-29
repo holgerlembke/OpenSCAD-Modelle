@@ -2,17 +2,78 @@
         Schraubstockteile
 
         * einzeln nach stl expoertieren, damit Höhenausrichtung stimmt
-        * Klemmbacke zwei mal zum Druck hinzufügen, flache Seite oben
+        * Klemmbacke zwei Mal zum Druck hinzufügen, flache Seite oben
+        * Parallelführer jeweils seitlich ein mal abschmirgeln
+        * Parallelführer benötigt M4 Schrauben M4x12 oder so
         
         2025-01-23/28        
 */
 
 $fn = $preview ? 20 : 200;
 
-
-
-drehknopf();
+// drehknopf();
 // klemmbacke();
+parallelfuehrer();
+
+//*****************************************************************************************************
+module parallelfuehrer() {
+    /*
+        Der Block kann nicht an die Längsanschläge anschlagen,
+        da dort eine Gußrundung ist. Darum insgesamt kürzer.
+    */
+    lochabstand = (25.5+34.6)/2.0;
+    lochofset = 12.5;    // Kürzer
+    schrlochdm = 4.6;
+    
+    // der Schraubenrand
+    schradm = 12.0;
+    schrahdelta = 4.5;    // Ringhöhe wg. Schraubenlänge
+    
+    blockbreite = 66.6;
+    blocklaenge = 36.0;
+    blockhoehe = 6.0;
+    blockofs = 5.0;
+    blockseitenhoehe = 15.0;    
+    blockseitenbreite = 10.0;
+    bockseitenfase = 2.5;
+    
+    difference() {
+        union() {
+            color("gray")
+            translate([-blockbreite/2+blockofs,0,0])
+                cube([blockbreite-2*blockofs,blocklaenge,blockhoehe]); 
+            color("cyan") {
+                translate([-blockbreite/2,0,0])
+                    blockfase(blockseitenbreite,blocklaenge,blockseitenhoehe,bockseitenfase); 
+                translate([blockbreite/2-blockseitenbreite,0,0])
+                    blockfase(blockseitenbreite,blocklaenge,blockseitenhoehe,bockseitenfase); 
+            }
+            // Die Schraubenabstandhalter wg. passende Schraube nicht in Grabbelkiste
+            color("green") {
+                translate([-lochabstand/2.0,lochofset,0])
+                    cylinder(d=schradm, h=blockhoehe+schrahdelta);
+                translate([lochabstand/2.0,lochofset,0])
+                    cylinder(d=schradm, h=blockhoehe+schrahdelta);
+            }
+        }
+        union() {
+            color("red") {
+                translate([-lochabstand/2.0,lochofset,-20])
+                    cylinder(d=schrlochdm, h=100);
+                translate([lochabstand/2.0,lochofset,-20])
+                    cylinder(d=schrlochdm, h=100);
+            }
+        }
+    }
+}
+
+//*****************************************************************************************************
+module blockfase(x,y,z,f) {
+    p = [[f,0],[0,f],[0,z],[x,z],[x,f],[x-f,0]];
+    translate([0,y,0]) 
+        rotate([90,0,0]) 
+            linear_extrude(height=y) polygon(p);
+}
 
 
 //*****************************************************************************************************

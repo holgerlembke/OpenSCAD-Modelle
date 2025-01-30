@@ -36,17 +36,19 @@ module parallelfuehrer() {
     blockseitenhoehe = 15.0;    
     blockseitenbreite = 10.0;
     bockseitenfase = 2.5;
+    bockrandfase = 2.5;
     
     difference() {
         union() {
             color("gray")
             translate([-blockbreite/2+blockofs,0,0])
                 cube([blockbreite-2*blockofs,blocklaenge,blockhoehe]); 
+
             color("cyan") {
                 translate([-blockbreite/2,0,0])
-                    blockfase(blockseitenbreite,blocklaenge,blockseitenhoehe,bockseitenfase); 
+                    blockfase(blockseitenbreite,blocklaenge,blockseitenhoehe,bockseitenfase,bockrandfase); 
                 translate([blockbreite/2-blockseitenbreite,0,0])
-                    blockfase(blockseitenbreite,blocklaenge,blockseitenhoehe,bockseitenfase); 
+                    blockfase(blockseitenbreite,blocklaenge,blockseitenhoehe,bockseitenfase,bockrandfase); 
             }
             // Die Schraubenabstandhalter wg. passende Schraube nicht in Grabbelkiste
             color("green") {
@@ -68,11 +70,16 @@ module parallelfuehrer() {
 }
 
 //*****************************************************************************************************
-module blockfase(x,y,z,f) {
-    p = [[f,0],[0,f],[0,z],[x,z],[x,f],[x-f,0]];
-    translate([0,y,0]) 
-        rotate([90,0,0]) 
-            linear_extrude(height=y) polygon(p);
+module blockfase(x,y,z,f1,f2) {
+    p1 = [[f1,0],[0,f1],[0,z],[x,z],[x,f1],[x-f1,0]];
+    p2 = [[0+f2,0],[0,0+f2],[0,y-f2],[0+f2,y],[x-f2,y],[x,y-f2],[x,f2],[x-f2,0]];
+    intersection() {
+        translate([0,y,0]) 
+            rotate([90,0,0]) 
+                linear_extrude(height=y) polygon(p1);
+
+        linear_extrude(height=z) polygon(p2);
+   }            
 }
 
 

@@ -7,10 +7,14 @@
 
 $fn = $preview ? 20 : 200;
 
-innen = (61.9+61.7)/2-0.5-0.1;
+innen = (61.9+61.7)/2-0.5-0.1-0.05;
 aussen = (63.5+63.8)/2;
 
+// Rundungsradius. Is so.
 rd = 20.0;
+
+// Dicke der Frontplatte. Anpassen, minimal 0.2 (2 Schichten)
+dh = 0.3;      
 
 
  //hilfskreuz();
@@ -21,11 +25,9 @@ difference() {
     color("blue") translate([0,0,1]) frame(0,4);
   }
   union() {
-    color("green") translate([0,0,0.4]) frame(1,7);
+    color("green") translate([0,0,dh]) frame(1,7);
   }
 }
-
-
 
 
 module frame(dd,hh) {
